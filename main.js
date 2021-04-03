@@ -7,7 +7,8 @@ const app = Vue.createApp({
             cart: 0,
             selectedVariant: 0,
 
-            onSale: false,
+            onSale: true,
+            msgpromocao: "it`s in promotion!",
                      
             details: ['50% cotton', '30% wool', '20% polyester'],
             sizes: [`pequeno`, 'medio, grande'],
@@ -24,24 +25,28 @@ const app = Vue.createApp({
             this.cart += 1
         },
         remToCart() {
-            if (this.cart >= 1) {
+            if (this.cart >= 1) {   
                 this.cart -= 1
             }
         },       
         updateVariant(index) {
             this.selectedVariant = index
-        }      
+        },    
     },
 
     computed: {
         title() {
-            return this.brand + ' ' + this.product
+                return this.brand + ' ' + this.product
         },
+        
         image() {
             return this.variants[this.selectedVariant].image
         },
         inStock() {
             return this.variants[this.selectedVariant].quantity
+        },
+        saleMessenge() {
+            return this.brand + ' ' + this.product + '\n' + this.msgpromocao
         }
 
     }
