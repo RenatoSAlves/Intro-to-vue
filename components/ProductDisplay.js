@@ -1,4 +1,4 @@
-app.component ('product-display', {
+app.component('product-display', {
   template:
     /*html*/
     `<div class="product-display">
@@ -8,6 +8,7 @@ app.component ('product-display', {
         </div>
         <div class="product-info">
           <h1> {{ title }}</h1>
+          <p>Shipping: {{ shipping }}</p>
           <p v-if="onSale">{{ saleMessenge }}</p>
           <p v-if="inStock">In Stock!</p>
           <p v-else>Out Out Stock, sorry...</p>
@@ -24,11 +25,7 @@ app.component ('product-display', {
           </div>
 
           <button class="button" :class="{disabledButton: !inStock}" :disabled="!inStock" @click="addToCart">Add to
-          cart</button>
-
-          <ul>
-          <li v-for="(aviso, index) in avisos" :key="index" @mouseover="slide()" class="{'nav-bar' : slide}">{{ aviso }}</li>
-          </ul>  
+          cart</button>        
         </div>
       </div>
     </div>`,
@@ -38,16 +35,14 @@ app.component ('product-display', {
       brand: 'Vue Mastery',
       url: `https://gitlab.com/RenatoSakasaki/`,
       selectedVariant: 0,
-      slide: false,
       onSale: true,
-      msgpromocao: "it`s in promotion!",
-      details: ['50% cotton', '30% wool', '20% polyester'],
+      msgpromocao: "it`s in promotion!",      
       sizes: [`pequeno`, 'medio, grande'],
+      details: ['50% cotton', '30% wool', '20% polyester'],
       variants: [
         { id: 2234, color: 'green', image: './assets/images/socks_green.jpg', quantity: 50 },
         { id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg', quantity: 0 }
       ],
-      avisos: ['Nao recomendado para menores de 18 anos', 'produto nao indicado em caso de suspeita de dengue', 'Deu duro? toma um dreher']
     }
   },
   methods: {
@@ -59,6 +54,12 @@ app.component ('product-display', {
     },
     slide() {
       this.slide = true
+    }
+  },
+  props: {
+    premium: {
+      type: Boolean,
+      required:true
     }
   },
   computed: {
@@ -73,6 +74,12 @@ app.component ('product-display', {
     },
     saleMessenge() {
       return this.brand + ' ' + this.product + '\n' + this.msgpromocao
-    }
+    },
+    shipping() {
+      if(this.premium){
+        return 'Free'
+      }
+        return 2.99
+      }
   }
 })
