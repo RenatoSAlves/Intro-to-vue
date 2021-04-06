@@ -17,7 +17,7 @@
     <div class="nav-bar"></div>  
 
     <div class="cart">Cart({{ cart }})</div>    
-    <product-display :premium="premium"></product-display>
+    <product-display :premium="premium" @add-to-cart="updateCart" @rem-to-cart="clearCart"></product-display>
     <product-details>{{ detail }}</product-details>
     
 
@@ -25,7 +25,7 @@
   </div>  
   `
   <!--Mount App-->
-  <script>
+  <script>            
     const mountedApp = app.mount('#app')
   </script> 
 </body>

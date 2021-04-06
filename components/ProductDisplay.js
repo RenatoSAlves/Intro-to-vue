@@ -25,20 +25,33 @@ app.component('product-display', {
           </div>
 
           <button class="button" :class="{disabledButton: !inStock}" :disabled="!inStock" @click="addToCart">Add to
-          cart</button>        
+          cart</button>
+
+          <button class="button" @click="remToCart">Rem to cart</button>        
         </div>
       </div>
     </div>`,
+  props: {
+    premium: {
+      type: Boolean,
+      required: true
+    }
+  },
   data() {
     return {
       product: 'Socks',
       brand: 'Vue Mastery',
+      msgpromocao: "it`s in promotion!",
       url: `https://gitlab.com/RenatoSakasaki/`,
+
       selectedVariant: 0,
+
       onSale: true,
-      msgpromocao: "it`s in promotion!",      
-      sizes: [`pequeno`, 'medio, grande'],
+      
+
       details: ['50% cotton', '30% wool', '20% polyester'],
+      sizes: [`pequeno`, 'medio, grande'],
+
       variants: [
         { id: 2234, color: 'green', image: './assets/images/socks_green.jpg', quantity: 50 },
         { id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg', quantity: 0 }
@@ -47,19 +60,16 @@ app.component('product-display', {
   },
   methods: {
     addToCart() {
-      this.cart += 1
+      this.$emit('add-to-cart', this.variants[this.selectedVariant].id) 
+    },
+    remToCart() {
+      this.$emit('rem-to-cart', this.variants[this.selectedVariant].id)
     },
     updateVariant(index) {
       this.selectedVariant = index
     },
     slide() {
       this.slide = true
-    }
-  },
-  props: {
-    premium: {
-      type: Boolean,
-      required:true
     }
   },
   computed: {
@@ -76,10 +86,10 @@ app.component('product-display', {
       return this.brand + ' ' + this.product + '\n' + this.msgpromocao
     },
     shipping() {
-      if(this.premium){
+      if (this.premium) {
         return 'Free'
       }
-        return 2.99
-      }
+      return 2.99
+    }
   }
 })

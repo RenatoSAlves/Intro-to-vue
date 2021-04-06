@@ -1,11 +1,20 @@
 const app = Vue.createApp({
     data() {
         return {
-            cart: 0,
-            premium: true,
-            details: ["70% cotton", "30% polyester" ]
+            cart: [],
+            premium: true
         }
     },
-    methods: {}
+    methods: {
+        updateCart(id) {
+            this.cart.push(id)
+        },
+        clearCart(id) {
+            const index = this.cart.indexOf(id)
+                if(index > -1){
+                    this.cart.splice(index, 1)
+                }
+        }   
+    }
 })
 
