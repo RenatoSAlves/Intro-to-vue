@@ -2,7 +2,8 @@ const app = Vue.createApp({
     data() {
         return {
             cart: [],
-            premium: true
+            premium: true,
+            url: "https://gitlab.com/RenatoSakasaki/",
         }
     },
     methods: {
